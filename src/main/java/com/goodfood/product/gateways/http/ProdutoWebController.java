@@ -2,6 +2,7 @@ package com.goodfood.product.gateways.http;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,6 +22,7 @@ import com.goodfood.product.domain.Produto;
 import com.goodfood.product.gateways.http.request.ProdutoRequest;
 import com.goodfood.product.gateways.http.response.ProdutoResponse;
 import com.goodfood.product.usecase.CriarProduto;
+import com.goodfood.product.usecase.EditarProduto;
 import com.goodfood.product.usecase.ObterProduto;
 import com.goodfood.product.usecase.ObterProdutoCategoria;
 import io.swagger.annotations.Api;
@@ -43,6 +45,7 @@ public class ProdutoWebController {
 
   private final ObterProduto obterProduto;
   private final CriarProduto criarProduto;
+  private final EditarProduto editarProduto;
   private final ObterProdutoCategoria obterProdutoCategoria;
 
   @ApiResponses(value = {@ApiResponse(code = 200, message = "Ok"),
@@ -91,7 +94,8 @@ public class ProdutoWebController {
   @CacheEvict(value = "ProdutoResponse", allEntries = true)
   public ResponseEntity<Void> editarProduto(@PathVariable String id,
       @RequestBody ProdutoRequest produtoRequest) {
-    return null;
+    editarProduto.execute(UUID.fromString(id), produtoRequest.toDomain());
+    return ResponseEntity.ok().build();
   }
   
   @ApiResponses(value = {@ApiResponse(code = 200, message = "Ok"),

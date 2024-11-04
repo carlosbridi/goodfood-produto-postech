@@ -1,5 +1,10 @@
 package com.goodfood.product.usecase;
 
-public interface EditarProduto {
+import java.util.UUID;
+import com.goodfood.product.domain.Produto;
 
+public interface EditarProduto {
+  
+  void execute(UUID id, Produto produtoEdited);
+  
 }
