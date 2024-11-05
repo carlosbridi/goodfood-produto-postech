@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goodfood-product
+  labels:
+    app: goodfood-product-postech
+spec:
+  selector:
+    matchLabels:
+      app: goodfood-product-postech
+  template:
+    metadata:
+      labels:
+        app: goodfood-product-postech
+    spec:
+      containers:
+      - name: goodfood-product-postech
+        image: bridicarlos/goodfood-product:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "200m"
+          limits:
+            cpu: "500m" 
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DATABASE_URL
+        - name: SERVER_PORT
+          value: "8080"
+        - name: DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DATABASE_USER
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DATABASE_PASSWORD

@@ -14,14 +14,16 @@ public class ProdutoResponse implements Serializable {
 
   private static final long serialVersionUID = 5033384337768652970L;
   
-  private String uuid;
+  private String id;
   private String descricao;
   private BigDecimal preco;
+  private String categoria;
   
   public ProdutoResponse(final Produto produto) {
-    this.uuid = produto.getId().toString();
+    this.id = produto.getId().toString();
     this.descricao = produto.getDescricao();        
     this.preco = produto.getPreco();
+    this.categoria = produto.getCategoria();
   }
 
 }
