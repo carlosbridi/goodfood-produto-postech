@@ -69,7 +69,7 @@ public class ProdutoWebController {
   @CacheEvict(value = "ProdutoResponse", allEntries = true)
   public ResponseEntity<ProdutoResponse> cadastrarProduto(
       @RequestBody ProdutoRequest produtoRequest) {
-    final Produto produto = criarProduto.execute(produtoRequest.toDomain());
+    final Produto produto = criarProduto.executar(produtoRequest.toDomain());
     return ResponseEntity.created(URI.create("/" + produto.getId())).body(new ProdutoResponse(produto));
   }
 
@@ -94,7 +94,7 @@ public class ProdutoWebController {
   @CacheEvict(value = "ProdutoResponse", allEntries = true)
   public ResponseEntity<Void> editarProduto(@PathVariable String id,
       @RequestBody ProdutoRequest produtoRequest) {
-    editarProduto.execute(UUID.fromString(id), produtoRequest.toDomain());
+    editarProduto.executar(UUID.fromString(id), produtoRequest.toDomain());
     return ResponseEntity.ok().build();
   }
   
@@ -103,7 +103,7 @@ public class ProdutoWebController {
   @ResponseStatus(code = HttpStatus.OK)
   @GetMapping
   public ResponseEntity<ProdutoResponse> obterProduto(@RequestParam String id) {
-    final Produto produto = obterProduto.execute(id);
+    final Produto produto = obterProduto.executar(id);
     return ResponseEntity.ok(new ProdutoResponse(produto));
   }
 
@@ -117,7 +117,7 @@ public class ProdutoWebController {
           description = "Categoria do produto", required = true, example = "BEBIDA"))
   @Cacheable(value = "ProdutoResponse", key = "#categoria")
   public ResponseEntity<List<ProdutoResponse>> buscarPorCategoria(@RequestParam String categoria) {
-    return ResponseEntity.ok(obterProdutoCategoria.execute(categoria).stream().map(ProdutoResponse::new).collect(Collectors.toList()));
+    return ResponseEntity.ok(obterProdutoCategoria.executar(categoria).stream().map(ProdutoResponse::new).collect(Collectors.toList()));
   }
 
 }

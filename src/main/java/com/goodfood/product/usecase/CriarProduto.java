@@ -4,6 +4,6 @@ import com.goodfood.product.domain.Produto;
 
 public interface CriarProduto {
 
-  Produto execute(Produto produto);
+  Produto executar(Produto produto);
   
 }

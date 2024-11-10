@@ -33,21 +33,21 @@ class CriarProdutoImplTest {
     }
 
     @Test
-    void executeShouldSaveAndReturnProduto() {
+    void executarDeveSalvarERetornarProduto() {
         final UUID id = UUID.randomUUID();
         Produto produto = Produto.builder().id(id).categoria(EProdutoCategoria.BEBIDA.name()).build();
         Produto expectedProduto = Produto.builder().id(id).categoria(EProdutoCategoria.BEBIDA.name()).build();
 
-        when(produtoDatabaseGateway.save(any(Produto.class))).thenReturn(expectedProduto);
+        when(produtoDatabaseGateway.salvar(any(Produto.class))).thenReturn(expectedProduto);
 
-        Produto result = criarProdutoImpl.execute(produto);
+        Produto result = criarProdutoImpl.executar(produto);
 
         assertEquals(expectedProduto, result);
-        verify(produtoDatabaseGateway, times(1)).save(any(Produto.class));
+        verify(produtoDatabaseGateway, times(1)).salvar(any(Produto.class));
     }
 
     @Test
-    void executeShouldThrowExceptionWhenProdutoIsNull() {
-        assertThrows(NullPointerException.class, () -> criarProdutoImpl.execute(null));
+    void executarDeveLancarExcecaoQuandoProdutoForNulo() {
+        assertThrows(NullPointerException.class, () -> criarProdutoImpl.executar(null));
     }
 }

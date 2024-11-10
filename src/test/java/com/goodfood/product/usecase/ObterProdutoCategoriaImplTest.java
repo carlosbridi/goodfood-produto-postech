@@ -29,24 +29,24 @@ class ObterProdutoCategoriaImplTest {
     }
 
     @Test
-    void executeShouldReturnProdutosWhenCategoriaIsValid() {
+    void executarDeveRetornarProdutosQuandoCategoriaForValida() {
         String categoria = "BEBIDA";
         List<Produto> expectedProdutos = List.of(Produto.builder().categoria(categoria).build());
 
-        when(produtoDatabaseGateway.findByCategory(categoria)).thenReturn(expectedProdutos);
+        when(produtoDatabaseGateway.obterPorCategoria(categoria)).thenReturn(expectedProdutos);
 
-        List<Produto> result = obterProdutoCategoriaImpl.execute(categoria);
+        List<Produto> result = obterProdutoCategoriaImpl.executar(categoria);
 
         assertEquals(expectedProdutos, result);
     }
 
     @Test
-    void executeShouldReturnEmptyListWhenCategoriaHasNoProdutos() {
+    void executarDeveRetornarListaVaziaQuandoCategoriaNaoTiverProdutos() {
         String categoria = "BEBIDA";
 
-        when(produtoDatabaseGateway.findByCategory(categoria)).thenReturn(Collections.emptyList());
+        when(produtoDatabaseGateway.obterPorCategoria(categoria)).thenReturn(Collections.emptyList());
 
-        List<Produto> result = obterProdutoCategoriaImpl.execute(categoria);
+        List<Produto> result = obterProdutoCategoriaImpl.executar(categoria);
 
         assertEquals(Collections.emptyList(), result);
     }

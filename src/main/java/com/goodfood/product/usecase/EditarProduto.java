@@ -5,6 +5,6 @@ import com.goodfood.product.domain.Produto;
 
 public interface EditarProduto {
   
-  void execute(UUID id, Produto produtoEdited);
+  void executar(UUID id, Produto produtoEdited);
   
 }

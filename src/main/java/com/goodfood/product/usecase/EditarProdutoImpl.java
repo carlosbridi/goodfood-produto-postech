@@ -13,14 +13,14 @@ public class EditarProdutoImpl implements EditarProduto {
   private final ProdutoDatabaseGateway produtoDatabaseGateway;
 
   @Override
-  public void execute(UUID id, Produto produtoEdited) {
-    Produto produto = produtoDatabaseGateway.findById(id);
+  public void executar(UUID id, Produto produtoEdited) {
+    Produto produto = produtoDatabaseGateway.obterPorId(id);
     
     produto.setPreco(produtoEdited.getPreco());
     produto.setDescricao(produtoEdited.getDescricao());
     produto.setCategoria(produtoEdited.getCategoria());
     
-    produtoDatabaseGateway.save(produto);
+    produtoDatabaseGateway.salvar(produto);
   }
   
 }
