@@ -22,7 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.goodfood.product.domain.EProdutoCategoria;
-import com.goodfood.product.domain.NotFoundException;
+import com.goodfood.product.domain.NaoEncontradoException;
 import com.goodfood.product.domain.Produto;
 import com.goodfood.product.gateways.database.entities.ProdutoEntity;
 import com.goodfood.product.gateways.database.repositories.ProdutoRepository;
@@ -41,7 +41,7 @@ class ProdutoDatabaseGatewayImplTest {
     }
 
     @Test
-    void saveShouldPersistProdutoAndReturnDomainObject() {
+    void salvarDevePersistirProdutoERetornarObjetoDeDominio() {
         Produto produto = Produto.builder()
                 .id(UUID.randomUUID())
                 .descricao("Test Product")
@@ -52,7 +52,7 @@ class ProdutoDatabaseGatewayImplTest {
         ProdutoEntity produtoEntity = new ProdutoEntity(produto);
         when(produtoRepository.save(any(ProdutoEntity.class))).thenReturn(produtoEntity);
 
-        Produto savedProduto = produtoDatabaseGateway.save(produto);
+        Produto savedProduto = produtoDatabaseGateway.salvar(produto);
 
         assertEquals(produto.getId(), savedProduto.getId());
         assertEquals(produto.getDescricao(), savedProduto.getDescricao());
@@ -61,17 +61,17 @@ class ProdutoDatabaseGatewayImplTest {
     }
 
     @Test
-    void deleteShouldRemoveProdutoById() {
+    void deletarDeveRemoverProdutoPorId() {
         UUID id = UUID.randomUUID();
         doNothing().when(produtoRepository).deleteById(id);
 
-        produtoDatabaseGateway.delete(id);
+        produtoDatabaseGateway.remover(id);
 
         verify(produtoRepository, times(1)).deleteById(id);
     }
 
     @Test
-    void findByCategoryShouldReturnListOfProdutos() {
+    void encontrarPorCategoriaDeveRetornarListaDeProdutos() {
         ProdutoEntity produtoEntity = ProdutoEntity.builder()
                 .id(UUID.randomUUID())
                 .descricao("Test Product")
@@ -82,24 +82,24 @@ class ProdutoDatabaseGatewayImplTest {
         when(produtoRepository.findByCategoria(EProdutoCategoria.BEBIDA))
                 .thenReturn(Collections.singletonList(produtoEntity));
 
-        List<Produto> produtos = produtoDatabaseGateway.findByCategory("BEBIDA");
+        List<Produto> produtos = produtoDatabaseGateway.obterPorCategoria("BEBIDA");
 
         assertEquals(1, produtos.size());
         assertEquals(produtoEntity.getId(), produtos.get(0).getId());
     }
 
     @Test
-    void findByCategoryShouldReturnEmptyListWhenNoProdutosFound() {
+    void encontrarPorCategoriaDeveRetornarListaVaziaQuandoNenhumProdutoEncontrado() {
         when(produtoRepository.findByCategoria(EProdutoCategoria.BEBIDA))
                 .thenReturn(Collections.emptyList());
 
-        List<Produto> produtos = produtoDatabaseGateway.findByCategory("BEBIDA");
+        List<Produto> produtos = produtoDatabaseGateway.obterPorCategoria("BEBIDA");
 
         assertTrue(produtos.isEmpty());
     }
 
     @Test
-    void findByIdShouldReturnProdutoWhenFound() {
+    void encontrarPorIdDeveRetornarProdutoQuandoEncontrado() {
         UUID id = UUID.randomUUID();
         ProdutoEntity produtoEntity = ProdutoEntity.builder()
                 .id(id)
@@ -110,17 +110,17 @@ class ProdutoDatabaseGatewayImplTest {
 
         when(produtoRepository.findById(id)).thenReturn(Optional.of(produtoEntity));
 
-        Produto produto = produtoDatabaseGateway.findById(id);
+        Produto produto = produtoDatabaseGateway.obterPorId(id);
 
         assertEquals(id, produto.getId());
         assertEquals("Test Product", produto.getDescricao());
     }
 
     @Test
-    void findByIdShouldThrowNotFoundExceptionWhenProdutoNotFound() {
+    void encontrarPorIdDeveLancarNaoEncontradoExceptionQuandoProdutoNaoEncontrado() {
         UUID id = UUID.randomUUID();
         when(produtoRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> produtoDatabaseGateway.findById(id));
+        assertThrows(NaoEncontradoException.class, () -> produtoDatabaseGateway.obterPorId(id));
     }
 }

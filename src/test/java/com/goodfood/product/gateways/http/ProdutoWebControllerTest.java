@@ -47,7 +47,7 @@ class ProdutoWebControllerTest {
     private ObterProdutoCategoria obterProdutoCategoria;
 
     @Test
-    void cadastrarProdutoWithValidRequest() throws Exception {
+    void cadastrarProdutoComRequisicaoValida() throws Exception {
         Produto produto = Produto.builder()
                 .id(UUID.randomUUID())
                 .descricao("Coca-cola")
@@ -55,7 +55,7 @@ class ProdutoWebControllerTest {
                 .categoria("BEBIDA")
                 .build();
 
-        when(criarProduto.execute(any())).thenReturn(produto);
+        when(criarProduto.executar(any())).thenReturn(produto);
 
         mockMvc.perform(post("/produto")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -68,7 +68,7 @@ class ProdutoWebControllerTest {
     }
 
     @Test
-    void editarProdutoWithValidRequest() throws Exception {
+    void editarProdutoComRequisicaoValida() throws Exception {
         Produto produto = Produto.builder()
                 .id(UUID.randomUUID())
                 .descricao("Coca-cola")
@@ -76,7 +76,7 @@ class ProdutoWebControllerTest {
                 .categoria("BEBIDA")
                 .build();
 
-        doNothing().when(editarProduto).execute(any(), any());
+        doNothing().when(editarProduto).executar(any(), any());
 
         mockMvc.perform(put("/produto/" + produto.getId())
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +85,7 @@ class ProdutoWebControllerTest {
     }
 
     @Test
-    void obterProdutoWithValidId() throws Exception {
+    void obterProdutoComIdValido() throws Exception {
         Produto produto = Produto.builder()
                 .id(UUID.randomUUID())
                 .descricao("Coca-cola")
@@ -93,7 +93,7 @@ class ProdutoWebControllerTest {
                 .categoria("BEBIDA")
                 .build();
 
-        when(obterProduto.execute(anyString())).thenReturn(produto);
+        when(obterProduto.executar(anyString())).thenReturn(produto);
 
         mockMvc.perform(get("/produto")
                                 .param("id", produto.getId().toString()))
@@ -104,7 +104,7 @@ class ProdutoWebControllerTest {
     }
 
     @Test
-    void buscarPorCategoriaWithValidCategory() throws Exception {
+    void buscarPorCategoriaComCategoriaValida() throws Exception {
         Produto produto = Produto.builder()
                 .id(UUID.randomUUID())
                 .descricao("Coca-cola")
@@ -112,7 +112,7 @@ class ProdutoWebControllerTest {
                 .categoria("BEBIDA")
                 .build();
 
-        when(obterProdutoCategoria.execute(anyString())).thenReturn(Collections.singletonList(produto));
+        when(obterProdutoCategoria.executar(anyString())).thenReturn(Collections.singletonList(produto));
 
         mockMvc.perform(get("/produto/categoria")
                                 .param("categoria", "BEBIDA"))

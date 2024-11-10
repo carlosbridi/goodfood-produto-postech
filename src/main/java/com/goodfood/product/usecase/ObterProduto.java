@@ -4,7 +4,7 @@ import com.goodfood.product.domain.Produto;
 
 public interface ObterProduto {
 
-  Produto execute(String idProduto);
+  Produto executar(String idProduto);
 
   
 }

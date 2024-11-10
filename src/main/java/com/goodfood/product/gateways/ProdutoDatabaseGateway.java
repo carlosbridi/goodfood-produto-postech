@@ -6,12 +6,12 @@ import com.goodfood.product.domain.Produto;
 
 public interface ProdutoDatabaseGateway {
 
-  Produto findById(UUID uuid);
+  Produto obterPorId(UUID uuid);
   
-  Produto save(Produto produto);
+  Produto salvar(Produto produto);
   
-  void delete(UUID uuid);
+  void remover(UUID uuid);
   
-  List<Produto> findByCategory(String category);
+  List<Produto> obterPorCategoria(String category);
   
 }

@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.goodfood.product.domain.NotFoundException;
+import com.goodfood.product.domain.NaoEncontradoException;
 import com.goodfood.product.domain.Produto;
 import com.goodfood.product.gateways.ProdutoDatabaseGateway;
 
@@ -30,23 +30,23 @@ class ObterProdutoImplTest {
     }
 
     @Test
-    void executeShouldReturnProdutoWhenIdIsValid() {
+    void executarDeveRetornarProdutoQuandoIdForValido() {
         UUID id = UUID.randomUUID();
         Produto expectedProduto = Produto.builder().id(id).build();
 
-        when(produtoDatabaseGateway.findById(id)).thenReturn(expectedProduto);
+        when(produtoDatabaseGateway.obterPorId(id)).thenReturn(expectedProduto);
 
-        Produto result = obterProdutoImpl.execute(id.toString());
+        Produto result = obterProdutoImpl.executar(id.toString());
 
         assertEquals(expectedProduto, result);
     }
 
     @Test
-    void executeShouldThrowExceptionWhenProdutoNotFound() {
+    void executarDeveLancarExcecaoQuandoProdutoNaoForEncontrado() {
         UUID id = UUID.randomUUID();
 
-        when(produtoDatabaseGateway.findById(id)).thenThrow(new NotFoundException("Produto não encontrado."));
+        when(produtoDatabaseGateway.obterPorId(id)).thenThrow(new NaoEncontradoException("Produto não encontrado."));
 
-        assertThrows(NotFoundException.class, () -> obterProdutoImpl.execute(id.toString()));
+        assertThrows(NaoEncontradoException.class, () -> obterProdutoImpl.executar(id.toString()));
     }
 }

@@ -12,8 +12,8 @@ public class CriarProdutoImpl implements CriarProduto {
 
   private final ProdutoDatabaseGateway produtoDatabaseGateway;
   
-  public Produto execute(Produto produto) {
-    return produtoDatabaseGateway.save(new ProdutoEntity(produto).toDomain());
+  public Produto executar(Produto produto) {
+    return produtoDatabaseGateway.salvar(new ProdutoEntity(produto).toDomain());
   }
   
 }

@@ -13,8 +13,8 @@ public class ObterProdutoCategoriaImpl implements ObterProdutoCategoria {
   private final ProdutoDatabaseGateway produtoDatabaseGateway;
   
   @Override
-  public List<Produto> execute(String categoria) {
-    return produtoDatabaseGateway.findByCategory(categoria);
+  public List<Produto> executar(String categoria) {
+    return produtoDatabaseGateway.obterPorCategoria(categoria);
   }
 
 }

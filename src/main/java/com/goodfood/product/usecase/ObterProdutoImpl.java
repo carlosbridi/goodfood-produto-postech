@@ -13,8 +13,8 @@ public class ObterProdutoImpl implements ObterProduto {
   private final ProdutoDatabaseGateway produtoDatabaseGateway;
   
   @Override
-  public Produto execute(String idProduto) {
-    return produtoDatabaseGateway.findById(UUID.fromString(idProduto));
+  public Produto executar(String idProduto) {
+    return produtoDatabaseGateway.obterPorId(UUID.fromString(idProduto));
   }
 
 }

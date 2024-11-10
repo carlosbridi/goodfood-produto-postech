@@ -13,7 +13,7 @@ import com.goodfood.product.domain.Produto;
 class ProdutoEntityTest {
 
     @Test
-    void produtoEntityShouldMapToDomainCorrectly() {
+    void produtoEntityDeveSerCriadoAPartirDoDominioCorretamente() {
         UUID id = UUID.randomUUID();
         ProdutoEntity produtoEntity = ProdutoEntity.builder().id(id).descricao("Test Product").preco(BigDecimal.valueOf(10.99)).categoria(EProdutoCategoria.BEBIDA).build();
 
@@ -26,7 +26,7 @@ class ProdutoEntityTest {
     }
 
     @Test
-    void produtoEntityShouldBeCreatedFromDomainCorrectly() {
+    void produtoEntityDeveTerIdNaoNuloAposCriacao() {
         UUID id = UUID.randomUUID();
         Produto produto = Produto.builder().id(id).descricao("Test Product").preco(BigDecimal.valueOf(10.99)).categoria("BEBIDA").build();
 
