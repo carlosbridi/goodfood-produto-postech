@@ -27,11 +27,15 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    - name: Build with Maven and test
       run: mvn -B package --file pom.xml
 
-    - name: Test
-      run: mvn test --file pom.xml
-
-    - name: Sonar
-      run: mvn sonar:sonar -Pcoverage
+    - name: SonarCloud Scan
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn sonar:sonar \
+            -Dsonar.projectKey=goodfood-postech-org_goodfood-produto-postech \
+            -Dsonar.organization=goodfood-postech-org \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Pcoverage
