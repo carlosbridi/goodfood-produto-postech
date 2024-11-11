@@ -32,3 +32,6 @@ jobs:
 
     - name: Test
       run: mvn test --file pom.xml
+
+    - name: Sonar
+      run: mvn sonar:sonar -Pcoverage
