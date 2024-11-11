@@ -92,6 +92,19 @@
 						</goals>
 					</execution>
 					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<formats>
+								<format>HTML</format>
+								<format>XML</format>
+							</formats>
+						</configuration>
+					</execution>
+					<execution>
 						<id>report</id>
 						<goals>
 							<goal>report</goal>
@@ -122,6 +135,19 @@
 								<goals>
 									<goal>prepare-agent</goal>
 								</goals>
+							</execution>
+							<execution>
+								<id>post-unit-test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>report</goal>
+								</goals>
+								<configuration>
+									<formats>
+										<format>HTML</format>
+										<format>XML</format>
+									</formats>
+								</configuration>
 							</execution>
 							<execution>
 								<id>report</id>
